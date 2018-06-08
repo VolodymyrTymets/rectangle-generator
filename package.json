@@ -1,0 +1,20 @@
+{
+  "name": "rectangle-generator",
+  "version": "1.0.0",
+  "description": "For generating rectangle impulses with different frequency",
+  "main": "index.js",
+  "scripts": {
+    "start": "node ./",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VolodymyrTymets/rectangle-generator.git"
+  },
+  "author": "Volodymyr Tymets",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/VolodymyrTymets/rectangle-generator/issues"
+  },
+  "homepage": "https://github.com/VolodymyrTymets/rectangle-generator#readme"
+}
