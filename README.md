@@ -2,9 +2,9 @@
 
 For generating rectangle impulses with different frequency
 
-![](https://github.com/VolodymyrTymets/rectangle-generator/blob/master/private/schema.png =100x20)
+![](https://github.com/VolodymyrTymets/rectangle-generator/blob/master/private/schema.png | height=250)
 
-![](https://github.com/VolodymyrTymets/rectangle-generator/blob/master/private/result.jpg =100x20)
+![](https://github.com/VolodymyrTymets/rectangle-generator/blob/master/private/result.jpg =250x250)
 
 ## Start 
 
