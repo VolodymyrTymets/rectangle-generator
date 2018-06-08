@@ -1,8 +1,11 @@
 # Rectangle generator
 
 For generating rectangle impulses with different frequency
-![](https://github.com/VolodymyrTymets/rectangle-generator/blob/master/private/schema.png?raw=true =250x)
-![](https://github.com/VolodymyrTymets/rectangle-generator/blob/master/private/result.jpg?raw=true =250x)
+
+![](https://github.com/VolodymyrTymets/rectangle-generator/blob/master/private/schema.png =250x)
+
+![](https://github.com/VolodymyrTymets/rectangle-generator/blob/master/private/result.jpg =250x)
+
 ## Start 
 
 `npm start` or `node ./ <frequency> <mode>`, where
