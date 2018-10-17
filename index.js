@@ -12,8 +12,8 @@ const stepTime = _.round((1000000 / freqArg) / 6);
 
 try {
   console.log(`run on gpio [${outNumber1}] [${outNumber2}] with frequency [${freqArg}] and position [${position}]`);
-  out1 = new Gpio(14, 'out');
-  out2 = new Gpio(15, 'out');
+  out1 = new Gpio(outNumber1, 'out');
+  out2 = new Gpio(outNumber2, 'out');
 } catch (err) {
   console.log('Error -> GPIO is not detected!!!');
   process.exit();
