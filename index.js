@@ -6,8 +6,8 @@ let out1 = null;
 let out2 = null;
 const outNumber1  = process.argv[4] && parseInt(process.argv[4]) || 14;
 const outNumber2  = process.argv[4] && parseInt(process.argv[5]) || 15;
-const freqArg = process.argv[2] && parseInt(process.argv[2]) || 1;
-const position = process.argv[3] || 1;
+const freqArg = process.argv[2] && parseInt(process.argv[2]) || parseInt(process.env.FREQ, 10) || 200;
+const position = process.argv[3] ||  parseInt(process.env.POSITION, 10) || 1;
 const stepTime = _.round((1000000 / freqArg) / 6);
 
 try {
