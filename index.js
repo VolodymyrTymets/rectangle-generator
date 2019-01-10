@@ -22,7 +22,8 @@ try {
 const positionMap = {
   '1': [stepTime, stepTime, stepTime, stepTime, stepTime, stepTime],
   '2': [0, stepTime * 2, stepTime, 0, stepTime * 2, stepTime],
-  '3': [0, stepTime * 2, 0, 0, stepTime * 2, 0]
+  '3': [0, stepTime * 2, 0, 0, stepTime * 2, 0],
+  '4': [0, stepTime, stepTime * 2, 0, stepTime, stepTime * 2]
 };
 
 let step = 1;
