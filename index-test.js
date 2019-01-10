@@ -33,7 +33,7 @@ try {
   process.exit();
 }
 
-const stepTimeRatting = stepTime * (ratting / 100);
+const stepTimeRatting = _.round(stepTime * (ratting / 100));
 const positionMap = {
   '1': [stepTime, stepTime, stepTime, stepTime, stepTime, stepTime], // _|^|_ _|^|_
   '2': [0, stepTime * 2, stepTime, 0, stepTime * 2, stepTime], // |^^|_ |^^|_
