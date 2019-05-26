@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "start": "node ./",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "run-test": "export FREQ=1 && export POSITION=2 index.js",
+    "autorun-test": "export FREQ=1 && export POSITION=2 && pm2 start index.js",
+    "autorun": "export FREQ=50 && export POSITION=2 && pm2 start index.js"
   },
   "repository": {
     "type": "git",
