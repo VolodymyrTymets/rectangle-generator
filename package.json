@@ -6,8 +6,8 @@
   "scripts": {
     "start": "node ./",
     "run-test": "export FREQ=1 && export POSITION=2 && node index.js",
-    "autorun-test": "export FREQ=1 && export POSITION=2 && pm2 start index.js",
-    "autorun": "export FREQ=50 && export POSITION=2 && pm2 start index.js"
+    "autorun-test": "export FREQ=1 && export POSITION=2 && pm2 start index.js --name 'rectangel-generaror-test'",
+    "autorun": "export FREQ=50 && export POSITION=2 && pm2 start index.js --name 'rectangel-generaror'"
   },
   "repository": {
     "type": "git",
