@@ -20,8 +20,8 @@
   },
   "homepage": "https://github.com/VolodymyrTymets/rectangle-generator#readme",
   "dependencies": {
-    "lodash": "^4.17.10",
-    "onoff": "^3.1.0",
-    "sleep": "^5.1.1"
+    "lodash": "^4.17.21",
+    "onoff": "^6.0.3",
+    "sleep": "^6.3.0"
   }
 }
