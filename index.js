@@ -1,48 +1,54 @@
-const _ = require('lodash');
-const sleep = require('sleep');
-const Gpio = require('onoff').Gpio;
+const redis = require('redis');
+const { fork } = require('node:child_process');
 
-let out1 = null;
-let out2 = null;
-const outNumber1  = process.argv[4] && parseInt(process.argv[4]) || 14;
-const outNumber2  = process.argv[4] && parseInt(process.argv[5]) || 15;
-const freqArg = process.argv[2] && parseInt(process.argv[2]) || parseInt(process.env.FREQ, 10) || 200;
-const position = process.argv[3] ||  parseInt(process.env.POSITION, 10) || 1;
-const stepTime = _.round((1000000 / freqArg) / 6);
+let frequency = 200
+let position = 1
+let corelation = 1
+let chield = null
 
-try {
-  console.log(`run on gpio [${outNumber1}] [${outNumber2}] with frequency [${freqArg}] and position [${position}]`);
-  out1 = new Gpio(outNumber1, 'out');
-  out2 = new Gpio(outNumber2, 'out');
-} catch (err) {
-  console.log('Error -> GPIO is not detected!!!');
-  process.exit();
+const getParams = (client) =>
+  Promise.all([
+    client.get('settings:frequency'),
+    client.get('settings:frequency-type'),
+    client.get('settings:frequency-corelation')
+  ])
+
+const start = (freq, pos, cor) => {
+  console.debug(`START generator freq:${freq} pos:${pos} cor:${cor}`)
+  const controller = new AbortController();
+  const { signal } = controller;
+  const child = fork('./generator.js', [freq, pos, cor], { signal });
+  child.on('error', (error) => {
+    console.error('Erro on start generatoe')
+  });
+  return controller
 }
 
-const positionMap = {
-  '1': [stepTime, stepTime, stepTime, stepTime, stepTime, stepTime],
-  '2': [0, stepTime * 2, stepTime, 0, stepTime * 2, stepTime],
-  '3': [0, stepTime * 2, 0, 0, stepTime * 2, 0],
-  '4': [0, stepTime, stepTime * 2, 0, stepTime, stepTime * 2]
-};
+redis.createClient()
+  .on('error', err => console.log('Redis Client Error', err))
+  .connect().then(client => {
+    console.log('Redis is connected:')
+    getParams(client).then((res) => {
+      console.debug(res)
+      chield = start(...res)
+      frequency = res[0]
+      position = res[1]
+      corelation = res[2]
+    })
 
-let step = 1;
-const times = positionMap[position] || positionMap['1'];
+    setInterval(() => {
+      getParams(client).then((res) => {
+        if (frequency !== res[0] || position !== res[1] || corelation !== res[2]) {
+          console.debug('STOP generator')
+          chield.abort();
+          setTimeout(() => {chield = start(...res)}, 10)
+        }
+        frequency = res[0]
+        position = res[1]
+        corelation = res[2]
+      })
+    }, 500)
+  })
 
-do {
-  if(step === 6) {
-    step = 1;
-    out2.writeSync(1);
-  }
-  if(step === 2) {
-    out1.writeSync(1)
-  }
-  if(step === 3) {
-    out1.writeSync(0)
-  }
-  if(step === 5) {
-    out2.writeSync(0)
-  }
-  times[step] - 1 && sleep.usleep(times[step -1]);
-  step ++;
-} while (true);
+
+
