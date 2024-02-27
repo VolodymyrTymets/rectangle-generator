@@ -8,8 +8,8 @@ const outNumber2  = process.argv[6] && parseInt(process.argv[6]) || 15;
 const freqArg = (process.argv[2] && parseInt(process.argv[2]) || parseInt(process.env.FREQ, 10) || 200);
 const position = process.argv[3] ||  parseInt(process.env.POSITION, 10) || 1;
 const corelation = process.argv[4] && parseFloat(process.argv[4]) || parseFloat(process.env.COR) || 1;
-// todo: remove * 1000 need only for test reason (frequ in Hz need to be in kHz)
-const stepTime = Math.round((1000000 / freqArg) / 6) * 100;
+
+const stepTime = Math.round((1000000 / freqArg) / 6);
 
 try {
   console.log(`run on gpio [${outNumber1}] [${outNumber2}] with frequency [${freqArg}] and position [${position}] and corelation [${corelation}]`);
