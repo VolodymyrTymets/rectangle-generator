@@ -1,7 +1,7 @@
 const redis = require('redis');
 const { fork } = require('node:child_process');
 
-let frequency = 200
+let frequency = 20
 let position = 1
 let corelation = 1
 let chield = null
