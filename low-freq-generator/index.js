@@ -92,6 +92,7 @@ const main = () => {
       getRedisParams(client).then((res) => {
         if (REDIS_ARGS[0] !== res[0] || REDIS_ARGS[1] !== res[1] || REDIS_ARGS[2] !== res[2]) {
           setIterationTimes(res[0], res[1], res[2]);
+          REDIS_ARGS = res;
         }
       })
     }, 50)
