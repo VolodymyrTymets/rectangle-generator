@@ -2,12 +2,12 @@
   "name": "rectangle-generator",
   "version": "1.0.0",
   "description": "For generating rectangle impulses with different frequency",
-  "main": "index.js",
+  "main": "low-freq-generator/index.js",
   "scripts": {
-    "start": "node ./",
-    "run-test": "export FREQ=1 && export POSITION=2 && node index.js",
-    "autorun-test": "export FREQ=1 && export POSITION=2 && pm2 start index.js --name 'rectangel-generaror-test'",
-    "autorun": "pm2 --name 'rectangel-generaror' start index.js -- 10 1",
+    "start": "node low-freq-generator/index.js",
+    "run-test": "export FREQ=1 && export POSITION=2 && node low-freq-generator/index.js",
+    "autorun-test": "export FREQ=1 && export POSITION=2 && pm2 start low-freq-generator/index.js --name 'rectangel-generaror-test'",
+    "autorun": "pm2 --name 'rectangel-generaror' start low-freq-generator/index.js -- 10 1",
     "autorun-redis": "pm2 start redis-server --name 'redis'"
   },
   "repository": {
