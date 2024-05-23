@@ -6,6 +6,7 @@ let out2 = null;
 let TIMES = [];
 let STEP = 1;
 let REDIS_ARGS = [];
+let DEFAULT_FREQ = 15;
 
 const getRedisParams = (client) =>
   Promise.all([
@@ -14,8 +15,20 @@ const getRedisParams = (client) =>
     client.get('settings:frequency-corelation')
   ])
 
+const getProcessParams = (buffer) => {
+  const args = buffer.toString().split('settings:frequency:');
+  const freqArgs = args.length && args[1];
+  const freq = parseInt(freqArgs);
+
+  if (Number.isInteger(freq)) {
+    return [freq, undefined, undefined]
+  }
+  return  [DEFAULT_FREQ, undefined, undefined]
+}
+
+
 const setIterationTimes = (freq, position = 1, correlation = 1) => {
-  console.log(`-> Set frequency [${freq}], position [${position}], correlation [${correlation}]`);
+  console.log(`[RG_app]-> Set frequency [${freq}], position [${position}], correlation [${correlation}]`);
   const stepTime = Math.round((1000 / freq) / 6);
   const timeMap = {
     '1': [stepTime, Math.round(stepTime * correlation), stepTime, stepTime, Math.round(stepTime * correlation), stepTime],
@@ -57,22 +70,22 @@ const iterator = () => {
 const main = () => {
   const outNumber1 = process.argv[5] && parseInt(process.argv[6]) || 14;
   const outNumber2 = process.argv[6] && parseInt(process.argv[6]) || 15;
-  const freqArg = (process.argv[2] && parseInt(process.argv[2]) || parseInt(process.env.FREQ, 10) || 15);
+  const freqArg = (process.argv[2] && parseInt(process.argv[2]) || parseInt(process.env.FREQ, 10) || DEFAULT_FREQ);
   const freqPositionArg = process.argv[3] || parseInt(process.env.POSITION, 10) || 1;
   const freqCorrelationArg = process.argv[4] && parseFloat(process.argv[4]) || parseFloat(process.env.COR) || 1;
 
   try {
-    console.log(`-> Start on GPIO [${outNumber1}] [${outNumber2}]`);
+    console.log(`[RG_app]-> Start on GPIO [${outNumber1}] [${outNumber2}]`);
     out1 = new Gpio(outNumber1, 'out');
     out2 = new Gpio(outNumber2, 'out');
   } catch (err) {
-    console.log('Error -> GPIO is not detected!!!')
+    console.log('[RG_app]-> Error: GPIO is not detected!!!')
     try {
-      console.log(`-> Try Start on GPIO [${outNumber1}] [${outNumber2}] for Raspberry Pi 5`);
+      console.log(`[RG_app]-> Try Start on GPIO [${outNumber1}] [${outNumber2}] for Raspberry Pi 5`);
       out1 = new Gpio(outNumber1 + 571, 'out');
       out2 = new Gpio(outNumber2 + 571, 'out');
     } catch (err) {
-      console.log('Error -> GPIO is not detected!!!');
+      console.log('[RG_app]-> Error: GPIO is not detected!!!');
       console.error(err)
       process.exit();
     }
@@ -81,9 +94,9 @@ const main = () => {
   iterator();
 
   redis.createClient()
-    .on('error', err => console.error('-> Redis Client Error', err))
+    .on('error', err => console.error('[RG_app]-> Redis Client Error', err))
     .connect().then(client => {
-    console.log('-> Redis successfully connected:');
+    console.log('[RG_app]-> Redis successfully connected:');
     getRedisParams(client).then((res) => {
       REDIS_ARGS = res;
     })
@@ -95,8 +108,13 @@ const main = () => {
           REDIS_ARGS = res;
         }
       })
-    }, 50)
+    }, 700)
   })
 }
 
+// on parent process message
+process.stdin
+  .on('data', data => setIterationTimes(...getProcessParams(data)))
+
 main();
+
