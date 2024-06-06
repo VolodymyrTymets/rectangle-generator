@@ -38,29 +38,29 @@ const setIterationTimes = (freq, position) => {
 
 const iterator = () => {
   if (STEP === 1) {
-    // out1.writeSync(0)
-    // out2.writeSync(0)
+    out1.writeSync(0)
+    out2.writeSync(0)
   }
   if (STEP === 2) {
-    // out1.writeSync(1)
-    // out2.writeSync(0)
+    out1.writeSync(1)
+    out2.writeSync(0)
   }
   if (STEP === 3) {
-    // out1.writeSync(0)
-    // out2.writeSync(0)
+    out1.writeSync(0)
+    out2.writeSync(0)
   }
   if (STEP === 4) {
-    // out1.writeSync(0)
-    // out2.writeSync(0)
+    out1.writeSync(0)
+    out2.writeSync(0)
   }
   if (STEP === 5) {
-    // out1.writeSync(0)
-    // out2.writeSync(1)
+    out1.writeSync(0)
+    out2.writeSync(1)
   }
   if (STEP === 6) {
     STEP = 1;
-    // out2.writeSync(0);
-    // out2.writeSync(0);
+    out2.writeSync(0);
+    out2.writeSync(0);
   }
   TIMES[STEP] - 1 && setTimeout(iterator, TIMES[STEP - 1]);
   STEP++;
@@ -83,7 +83,7 @@ const main = () => {
     } catch (err) {
       console.log('[RG_app]-> Error: GPIO is not detected!!!');
       console.error(err)
-      // process.exit();
+      process.exit();
     }
   }
   setIterationTimes(FREQ, TYPE);
