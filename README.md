@@ -15,3 +15,10 @@ For generating rectangle impulses with different frequency
 - mode - 1 | 2 | 3 (default 1) - represent the form of impulses;
 
 To run adjustment mode run `node ./adjustment.js` and pass 6 params each of them represent the time between rectangle
+
+## Autorun 
+```
+npm run autorun-redis
+npm run autorun
+pm2 save
+``` 

@@ -4,10 +4,10 @@
   "description": "For generating rectangle impulses with different frequency",
   "main": "index.js",
   "scripts": {
-    "start": "node ./",
+    "start": "node index.js",
     "run-test": "export FREQ=1 && export POSITION=2 && node index.js",
     "autorun-test": "export FREQ=1 && export POSITION=2 && pm2 start index.js --name 'rectangel-generaror-test'",
-    "autorun": "export FREQ=50 && export POSITION=2 && pm2 start index.js --name 'rectangel-generaror'"
+    "autorun": "pm2 --name 'rectangel-generaror' start index.js -- 10 1"
   },
   "repository": {
     "type": "git",
@@ -20,8 +20,6 @@
   },
   "homepage": "https://github.com/VolodymyrTymets/rectangle-generator#readme",
   "dependencies": {
-    "lodash": "^4.17.21",
-    "onoff": "^6.0.3",
-    "sleep": "^6.3.0"
+    "onoff": "^6.0.3"
   }
 }
