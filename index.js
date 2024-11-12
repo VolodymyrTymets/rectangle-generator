@@ -29,7 +29,8 @@ const setIterationTimes = (freq, position) => {
   const stepTime = Math.round((1000 / freq) / 6);
   const timeMap = {
     '1': [stepTime, stepTime , stepTime, stepTime, stepTime, stepTime],
-    '2': [0, stepTime, stepTime, 0, stepTime, stepTime],
+    '2': [0, stepTime * 2, stepTime, 0, stepTime * 2, stepTime],
+    '3': [0, stepTime, stepTime, 0, stepTime, stepTime],
   };
   TIMES = timeMap[position] || timeMap['1'];
   FREQ = freq
